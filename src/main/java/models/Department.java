@@ -90,6 +90,48 @@ public class Department {
             return con.createQuery(sql).executeAndFetch(Department.class);
         }
     }
+    public void addUserToDepartment(User user, Department department){
+        try(Connection con = DB.sql2o.open()){
+            String sql = "INSERT INTO departments_users(deptid, userid) VALUES (:deptId, :userId)";
+            con.createQuery(sql)
+                    .addParameter("deptId", department.getId())
+                    .addParameter("userId", user.getId())
+                    .executeUpdate();
+            user.setDepartment(department.getName());
+            this.increaseEmployeeCount();
+        } catch (Sql2oException ex){
+            System.out.println("Unable to add user to department: " + ex);
+        }
+    }
 
+    public static Department findById(int id){
+        try(Connection con = DB.sql2o.open()){
+            String sql = "SELECT FROM departments WHERE id=:id";
+            return con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(Department.class);
+        }
+    }
+
+    public static List<User> allDepartmentUsers(int departmentId){
+        List<User> users = new ArrayList<>();
+        String joinQuery = "SELECT FROM departments_users WHERE departmentid=:deptId";
+        try(Connection con = DB.sql2o.open()){
+            List<Integer> userIds = con.createQuery(joinQuery)
+                    .addParameter("deptId", departmentId)
+                    .executeAndFetch(Integer.class);
+            for (Integer userId:userIds){
+                String sql = "SELECT FROM users WHERE id=:id";
+                users.add(
+                        con.createQuery(sql)
+                                .addParameter("id", userId)
+                                .executeAndFetchFirst(User.class)
+                );
+            }
+        } catch (Sql2oException ex){
+            System.out.println("Unable to fetch all department users: " + ex);
+        }
+        return users;
+    }
 
 }
