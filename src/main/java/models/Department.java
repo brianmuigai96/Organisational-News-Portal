@@ -133,5 +133,49 @@ public class Department {
         }
         return users;
     }
+    public void updateUserCount(Department department) {
+        try(Connection conn = DB.sql2o.open()){
+            String sql = "UPDATE departments SET employee_count= :employeeCount WHERE id=:id";
+            conn.createQuery(sql)
+                    .addParameter("employeeCount", department.getEmployee_count())
+                    .addParameter("id", department.getId())
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println("Unable to update departments: " + ex);
+        }
+    }
 
+    public static void deleteDepartmentById(int id) {
+        try(Connection conn = DB.sql2o.open()){
+            String sql = "DELETE FROM departments WHERE id=:id";
+            conn.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println("Unable to delete department by ID: " + ex);
+        }
+    }
+
+    public static void deleteEmployeeFromDepartment(Department department, User user) {
+        try(Connection conn = DB.sql2o.open()){
+            String sql = "DELETE from departments_users WHERE deptid = :deptId AND userId = :userId";
+            conn.createQuery(sql)
+                    .addParameter("deptId", department.getId())
+                    .addParameter("userId", user.getId())
+                    .executeUpdate();
+            user.setDepartment("None");
+            department.reduceEmployeeCount();
+        } catch (Sql2oException ex){
+            System.out.println("Unable to delete from dept_users: " + ex);
+        }
+    }
+
+    public static void clearAll() {
+        try(Connection conn = DB.sql2o.open()){
+            String sql = "DELETE FROM departments";
+            conn.createQuery(sql).executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println("Unable to delete all departments: " + ex);
+        }
+    }
 }
