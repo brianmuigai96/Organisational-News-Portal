@@ -81,5 +81,40 @@ public class User {
             System.out.println("Unable to add user to database: " + ex);
         }
     }
+    public static List<User> all(){
+        try(Connection con = DB.sql2o.open()){
+            String sql = "SELECT * FROM users";
+            return con.createQuery(sql).executeAndFetch(User.class);
+        }
+    }
+
+    public static User findById(int id){
+        try(Connection con = DB.sql2o.open()){
+            String sql = "SELECT * FROM users WHERE id=:id";
+            return con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(User.class);
+        }
+    }
+
+    public static void deleteById(int id){
+        try(Connection con = DB.sql2o.open()){
+            String sql = "DELETE FROM users WHERE id=:id";
+            con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println("Unable to delete user by id: " + ex);
+        }
+    }
+
+    public static void deleteAll(){
+        try(Connection con = DB.sql2o.open()){
+            String sql = "DELETE FROM users";
+            con.createQuery(sql).executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println("Unable to delete all users: " + ex);
+        }
+    }
 
 }
