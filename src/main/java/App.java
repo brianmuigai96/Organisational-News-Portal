@@ -63,6 +63,28 @@ public class App {
 
             return gson.toJson(User.findById(userId));
         });
+        post("/departments/new", "application/json", (request, response) -> {
+            Department department = gson.fromJson(request.body(), Department.class);
+            Department.add(department);
+            response.status(201);
+            response.type("application/json");
+            return gson.toJson(department);
+        });
+
+
+        post("/departments/:departmentId/users/new", "application/json", (request, response) -> {
+            int departmentId = Integer.parseInt(request.params("departmentId"));
+            Department newDepartment = Department.findById(departmentId);
+            User newUser = gson.fromJson(request.body(), User.class);
+            User.add(newUser);
+            newUser.setDepartment(newDepartment.getName());
+            newDepartment.addUserToDepartment(newUser, newDepartment);
+            response.status(201);
+            response.type("application/json");
+            return gson.toJson(newUser);
+        });
+
+    }
 
 
 
