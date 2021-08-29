@@ -16,4 +16,37 @@ public class Department {
     private int employee_count;
     private int id;
 
+    public Department(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getEmployee_count() {
+        return employee_count;
+    }
+
+    public void setEmployee_count(int employee_count) {
+        this.employee_count = employee_count;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
 }
