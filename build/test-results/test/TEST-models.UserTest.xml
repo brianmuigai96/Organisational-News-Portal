@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="models.UserTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-08-28T20:11:43" hostname="eric-HP-Pavilion-Laptop-14-ce3xxx" time="0.136">
+  <properties/>
+  <testcase name="user_instantiatesCorrectly_true" classname="models.UserTest" time="0.136"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
