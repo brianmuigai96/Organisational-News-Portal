@@ -52,5 +52,34 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return id == user.id &&
+                Objects.equals(getName(), user.getName()) &&
+                Objects.equals(getPosition(), user.getPosition()) &&
+                Objects.equals(getRole(), user.getRole()) &&
+                Objects.equals(getDepartment(), user.getDepartment());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, getName(), getPosition(), getRole(), getDepartment());
+    }
+
+    public static void add(User user){
+        try(Connection con = DB.sql2o.open()){
+            String sql = "INSERT INTO users (name, position, role, department) VALUES (:name, :position, :role, :department)";
+            int id = (int) con.createQuery(sql, true)
+                    .bind(user)
+                    .executeUpdate()
+                    .getKey();
+            user.setId(id);
+        } catch (Sql2oException ex){
+            System.out.println("Unable to add user to database: " + ex);
+        }
+    }
 
 }
