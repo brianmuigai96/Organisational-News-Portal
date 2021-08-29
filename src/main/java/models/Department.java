@@ -47,6 +47,14 @@ public class Department {
     public void setId(int id) {
         this.id = id;
     }
+    public int increaseEmployeeCount(){
+        return this.employee_count++;
+    }
+
+    public int reduceEmployeeCount(){
+        return this.employee_count--;
+    }
+
 
 
 }
