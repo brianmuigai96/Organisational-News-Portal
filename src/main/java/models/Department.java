@@ -24,6 +24,11 @@ public class Department {
     public String getName() {
         return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -47,6 +52,7 @@ public class Department {
     public void setId(int id) {
         this.id = id;
     }
+
     public int increaseEmployeeCount(){
         return this.employee_count++;
     }
@@ -54,6 +60,7 @@ public class Department {
     public int reduceEmployeeCount(){
         return this.employee_count--;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -90,6 +97,7 @@ public class Department {
             return con.createQuery(sql).executeAndFetch(Department.class);
         }
     }
+
     public void addUserToDepartment(User user, Department department){
         try(Connection con = DB.sql2o.open()){
             String sql = "INSERT INTO departments_users(deptid, userid) VALUES (:deptId, :userId)";
@@ -133,6 +141,7 @@ public class Department {
         }
         return users;
     }
+
     public void updateUserCount(Department department) {
         try(Connection conn = DB.sql2o.open()){
             String sql = "UPDATE departments SET employee_count= :employeeCount WHERE id=:id";
@@ -178,4 +187,5 @@ public class Department {
             System.out.println("Unable to delete all departments: " + ex);
         }
     }
+
 }
