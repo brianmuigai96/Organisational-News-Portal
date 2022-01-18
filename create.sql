@@ -6,4 +6,5 @@ CREATE TABLE news (id serial PRIMARY KEY, general text, department text);
 CREATE TABLE departments_users (id serial PRIMARY KEY, deptid int, userid int);
 CREATE TABLE departments_news (id serial PRIMARY KEY, deptid int, userid int, newsid int);
 
+
 CREATE DATABASE news_portal_test WITH TEMPLATE news_portal;
