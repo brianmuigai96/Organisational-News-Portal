@@ -8,8 +8,8 @@ Brian Muigai
 
 ## Contact
 
-muigaibrian@gmail.com
-brian.muigai@student.moringaschool.com
+- muigaibrian@gmail.com
+- Grad brian.muigai@student.moringaschool.com
 
 ## Description
 
@@ -29,6 +29,8 @@ Create a rest REST API for querying and retrieving scoped news and information. 
 - JUnit v4.12
 - Jacoco Plugin
 - Velocity Templating Engine
+- Postgres Sql
+
 
 
 
